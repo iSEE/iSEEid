@@ -1,0 +1,52 @@
+---
+title: "Introduction to iSEEid"
+author: 
+  - name: Kevin Rue-Albrecht
+    affiliation:
+    - University of Oxford
+    email: kevin.rue-albrecht@imm.ox.ac.uk
+  - name: Kevin Rue-Albrecht
+    affiliation:
+    - University of Oxford
+    email: kevin.rue-albrecht@imm.ox.ac.uk
+  - name: Kevin Rue-Albrecht
+    affiliation:
+    - University of Oxford
+    email: kevin.rue-albrecht@imm.ox.ac.uk
+output: 
+  BiocStyle::html_document:
+    self_contained: yes
+    toc: true
+    toc_float: true
+    toc_depth: 2
+    code_folding: show
+date: "`r doc_date()`"
+package: "`r pkg_ver('iSEEid')`"
+vignette: >
+  %\VignetteIndexEntry{Introduction to iSEEid}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}  
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library("iSEEid")
+```
+
+# Quick start to using `iSEEid`
+
+This is a basic example
+
+# Session info {-}
+
+```{r}
+sessionInfo()
+```
+
+# Bibliography
