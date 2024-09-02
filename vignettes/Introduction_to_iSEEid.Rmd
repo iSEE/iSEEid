@@ -26,6 +26,7 @@ vignette: >
   %\VignetteIndexEntry{Introduction to iSEEid}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}  
+bibliography: bibliography_iSEEid.bib
 ---
 
 ```{r, include = FALSE}
@@ -41,7 +42,7 @@ library("iSEEid")
 
 # Quick start to using `iSEEid`
 
-This is a basic example
+This is a basic example [@kra2018iSEE]
 
 # Session info {-}
 
