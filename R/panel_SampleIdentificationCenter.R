@@ -56,8 +56,6 @@ NULL
 
 # Constants -----
 
-.editor_suffix <- "_editor"
-
 # Definition -------------------------------------------------------------------
 
 collated <- character(0)
@@ -137,8 +135,13 @@ setMethod(".generateOutput", "SampleIdentificationCenter", function(x, se, all_m
   
   list(
     commands=all_cmds,
-    contents=selected_names,
-    varname="varname_SampleIdentificationCenter")
+    contents=aceEditor(
+      panel_name,
+      mode="r",
+      theme="solarized_light",
+      value=paste0(selected_names, collapse = "\n"),
+      height=paste0(slot(x, .organizationHeight), "px")),
+    varname=panel_name)
 })
 
 
@@ -151,7 +154,7 @@ setMethod(".defineOutput", "SampleIdentificationCenter", function(x) {
   print(x)
   
   tagList(
-    textOutput(panel_name)
+    uiOutput(panel_name)
   )
 
 })
@@ -164,8 +167,8 @@ setMethod(".renderOutput", "SampleIdentificationCenter", function(x, se, output,
   force(se) # defensive programming to avoid difficult bugs due to delayed evaluation.
   
   # nocov start
-  output[[panel_name]] <- renderText({
-    paste0(.retrieveOutput(panel_name, se, pObjects, rObjects)$contents, collapse = "\n")
+  output[[panel_name]] <- renderUI({
+    .retrieveOutput(panel_name, se, pObjects, rObjects)$contents
   })
   # nocov end
   
