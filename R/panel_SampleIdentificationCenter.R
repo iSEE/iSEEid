@@ -20,6 +20,7 @@
 #'
 #'
 #' @examples
+#' library(iSEE)
 #' library(scRNAseq)
 #'
 #' # Example data ----
@@ -39,7 +40,10 @@
 #' if (interactive()) {
 #'     iSEE(sce, initial=list(
 #'         ReducedDimensionPlot(),
-#'         SampleIdentificationCenter())
+#'         SampleIdentificationCenter(
+#'           ColumnSelectionSource = "ReducedDimensionPlot1"
+#'         )
+#'       )
 #'     )
 #' }
 #'
@@ -50,19 +54,20 @@
 #' @name SampleIdentificationCenter-class
 NULL
 
+# Constants -----
+
+.editor_suffix <- "_editor"
+
 # Definition -------------------------------------------------------------------
 
 collated <- character(0)
-
-.plotBinResolution <- "Content"
-collated[.plotBinResolution] <- "numeric"
 
 #' @export
 #' @importClassesFrom iSEE ColumnTable ColumnDataTable
 #' @import SummarizedExperiment
 #' @importFrom shinyAce aceEditor
 setClass("SampleIdentificationCenter",
-         contains = "ColumnDataTable"  ,
+         contains = "Panel"  ,
          slots = collated
          )
 
@@ -89,68 +94,12 @@ setMethod(".panelColor", "SampleIdentificationCenter", function(x) "#00C4DA")
 setMethod("initialize", "SampleIdentificationCenter", function(.Object, ...) {
   args <- list(...)
 
-  # args <- .emptyDefault(args, .plotBinResolution, 100)
-  # args[["Downsample"]] <- FALSE
-
   do.call(callNextMethod, c(list(.Object), args))
 })
 
 
 # Interface --------------------------------------------------------------------
 
-#' @export
-#' @importFrom shiny tagList
-setMethod(".defineDataInterface", "SampleIdentificationCenter", function(x) {
-  panel_name <- .getEncodedName(x)
-
-  .addSpecificTour(class(x), .plotBinResolution, function(panel_name) {
-    data.frame(
-      element=paste0("#", panel_name, "_", .plotBinResolution),
-      intro="Here, we can change the bin size of the plot.
-Larger values will result in larger bins, sacrificing resolution for more stable counts.
-One should avoid setting this too low as then the plot just collapses to showing each point as a separate bin."
-    )
-  })
-
-  tagList(
-  .numericInput.iSEE(x, .plotBinResolution, label="Bin resolution:",
-                     min=1, value=x[[.plotBinResolution]], step = 1)
-  )
-
-
-})
-
-#' #' @export
-#' #' @importFrom shiny tagList
-#' setMethod(".defineInterface", "SampleIdentificationCenter", function(x) {
-#'   plot_name <- .getEncodedName(x)
-#'
-#'   .addSpecificTour(class(x), .plotBinResolution, function(plot_name) {
-#'     data.frame(
-#'       element=paste0("#", plot_name, "_", .plotBinResolution),
-#'       intro="Here, we can change the bin size of the plot.
-#' Larger values will result in larger bins, sacrificing resolution for more stable counts.
-#' One should avoid setting this too low as then the plot just collapses to showing each point as a separate bin."
-#'     )
-#'   })
-#'
-#'   tagList(
-#'     .numericInput.iSEE(x, .plotBinResolution, label="Bin resolution:",
-#'                        min=1, value=x[[.plotBinResolution]], step = 1)
-#'   )
-#' })
-
-#' #' @export
-#' setMethod(".allowableColorByDataChoices", "SampleIdentificationCenter", function(x, se) {
-#'   .getCachedCommonInfo(se, "ColumnDotPlot")$continuous.colData.names
-#' })
-
-
-
-#' @export
-setMethod(".defineDataInterface", "SampleIdentificationCenter", function(x) {
-  NULL
-})
 
 # Observers --------------------------------------------------------------------
 
@@ -161,10 +110,6 @@ setMethod(".createObservers", "SampleIdentificationCenter", function(x, se, inpu
 
   panel_name <- .getEncodedName(x)
 
-  .createProtectedParameterObservers(panel_name,
-                                     fields=c(.plotBinResolution),
-                                     input=input, pObjects=pObjects, rObjects=rObjects)
-
   invisible(NULL)
 })
 
@@ -173,83 +118,69 @@ setMethod(".createObservers", "SampleIdentificationCenter", function(x, se, inpu
 
 #' @export
 #' @importFrom shiny tagList
-setMethod(".defineOutput", "SampleIdentificationCenter", function(x) {
+setMethod(".generateOutput", "SampleIdentificationCenter", function(x, se, all_memory, all_contents) {
+  print(".generateOutput-SampleIdentificationCenter")
   panel_name <- .getEncodedName(x)
-
-  id_editor <- paste0(panel_name, "_editor")
-  id_rationale <- paste0(panel_name, "_rationale")
-  id_copypaste <- paste0(panel_name, "_copypaste")
-  id_commander <- paste0(panel_name, "_commander")
-
-  .addSpecificTour(class(x), "editor", function(panel_name) {
-    data.frame(
-      element=paste0("#", panel_name, "_editor"),
-      intro="editor context help."
-    )
-  })
-
-  .addSpecificTour(class(x), "rationale", function(panel_name) {
-    data.frame(
-      element=paste0("#", panel_name, "_rationale"),
-      intro="rationale context help."
-    )
-  })
-
-  .addSpecificTour(class(x), "copypaste", function(panel_name) {
-    data.frame(
-      element=paste0("#", panel_name, "_copypaste"),
-      intro="_copypaste context help."
-    )
-  })
-
-  .addSpecificTour(class(x), "commander", function(panel_name) {
-    data.frame(
-      element=paste0("#", panel_name, "_commander"),
-      intro="_commander context help."
-    )
-  })
+  
+  all_cmds <- list()
+  
+  panel_env <- new.env()
+  panel_env$se <- se
+  
+  all_cmds$select <- .processMultiSelections(x, all_memory, all_contents, panel_env)
+  print(all_cmds)
+  .textEval(all_cmds, panel_env)
+  print(ls(panel_env))
+  
+  selected_names <- panel_env$col_selected[["active"]]
+  print(selected_names)
+  
+  list(
+    commands=all_cmds,
+    contents=selected_names,
+    varname="varname_SampleIdentificationCenter")
+})
 
 
+#' @export
+#' @importFrom shiny tagList
+setMethod(".defineOutput", "SampleIdentificationCenter", function(x) {
+  print(".defineOutput-SampleIdentificationCenter")
+  panel_name <- .getEncodedName(x)
+  
+  print(x)
+  
   tagList(
-    span(id = paste0(id_editor, "_specific_help"),
-         style="display:inline-block; padding-bottom:5px;",
-         HTML("<strong>Selected cells:</strong> <sup>?</sup>")),
-    aceEditor(id_editor,
-              mode="markdown",
-              theme="xcode",
-              autoComplete="disabled",
-              value=slot(x, "Content"),
-              debounce=1000,
-              height="500px"
-    ),
-
-    span(id = paste0(id_rationale, "_specific_help"),
-         style="display:inline-block; padding-bottom:5px;",
-         HTML("<strong>Specify the rationale for the selection:</strong> <sup>?</sup>")),
-    textInput(id_rationale, label = "",
-              placeholder = "Tell me why"),
-
-    span(id = paste0(id_copypaste, "_specific_help"),
-         style="display:inline-block; padding-bottom:5px;",
-         HTML("<strong>Copy to clipboard</strong> <sup>?</sup>")),
-    br(),
-    actionButton(id_copypaste, label = "Copy to clipboard", icon = icon("copy")),
-    br(),
-
-    span(id = paste0(id_commander, "_specific_help"),
-         style="display:inline-block; padding-bottom:5px;",
-         HTML("<strong>Generate the full command:</strong> <sup>?</sup>")),
-    br(),
-    actionButton(id_commander, label = "Create command!", icon = icon("magic")),
-    hr()
-
+    textOutput(panel_name)
   )
 
 })
 
+#' @export
+#' @importFrom shiny renderPlot tagList wellPanel nearPoints renderUI
+setMethod(".renderOutput", "SampleIdentificationCenter", function(x, se, output, pObjects, rObjects) {
+  print(".renderOutput-SampleIdentificationCenter")
+  panel_name <- .getEncodedName(x)
+  force(se) # defensive programming to avoid difficult bugs due to delayed evaluation.
+  
+  # nocov start
+  output[[panel_name]] <- renderText({
+    paste0(.retrieveOutput(panel_name, se, pObjects, rObjects)$contents, collapse = "\n")
+  })
+  # nocov end
+  
+  callNextMethod()
+})
 
+# Transmission -------
 
-
+#' @export
+setMethods(".multiSelectionResponsive", "SampleIdentificationCenter", function(x, dims = character(0)){
+  if ("column" %in% dims) {
+    return(TRUE)
+  }
+  return(FALSE)
+})
 
 # Tour definition ---------------------------------------------------------
 

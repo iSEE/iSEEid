@@ -29,6 +29,7 @@ In the following code snippets, \code{x} is an instance of a
 }
 
 \examples{
+library(iSEE)
 library(scRNAseq)
 
 # Example data ----
@@ -48,7 +49,10 @@ rowData(sce)$n_cells <- rowSums(assay(sce, "tophat_counts") > 0)
 if (interactive()) {
     iSEE(sce, initial=list(
         ReducedDimensionPlot(),
-        SampleIdentificationCenter())
+        SampleIdentificationCenter(
+          ColumnSelectionSource = "ReducedDimensionPlot1"
+        )
+      )
     )
 }
 
