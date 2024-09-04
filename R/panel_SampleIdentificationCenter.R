@@ -66,7 +66,7 @@
 #' @name SampleIdentificationCenter-class
 NULL
 
-# Constants -----
+# Constants --------------------------------------------------------------------
 
 # Definition -------------------------------------------------------------------
 
@@ -110,6 +110,11 @@ setMethod("initialize", "SampleIdentificationCenter", function(.Object, ...) {
 
 # Interface --------------------------------------------------------------------
 
+# TODO - placeholder
+
+## Idea: have a radio button/checkbox to control what the editor can give
+## Idea: have a textInput where to record the reason why one would select those cells
+## These elements could just "refine" the behavior of the content returned by the text editor
 
 # Observers --------------------------------------------------------------------
 
@@ -187,7 +192,7 @@ setMethod(".renderOutput", "SampleIdentificationCenter", function(x, se, output,
   callNextMethod()
 })
 
-# Transmission -------
+# Transmission -----------------------------------------------------------------
 
 #' @export
 setMethods(".multiSelectionResponsive", "SampleIdentificationCenter", function(x, dims = character(0)){
@@ -197,7 +202,7 @@ setMethods(".multiSelectionResponsive", "SampleIdentificationCenter", function(x
   return(FALSE)
 })
 
-# Tour definition ---------------------------------------------------------
+# Tour definition --------------------------------------------------------------
 
 #' @export
 setMethod(".definePanelTour", "SampleIdentificationCenter", function(x) {
