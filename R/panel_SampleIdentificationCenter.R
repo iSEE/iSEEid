@@ -18,6 +18,18 @@
 #' In the following code snippets, `x` is an instance of a
 #' [SampleIdentificationCenter-class] class.
 #'
+#' @docType methods
+#'
+#' @aliases
+#' SampleIdentificationCenter SampleIdentificationCenter-class
+#' .createObservers,SampleIdentificationCenter-method
+#' .defineOutput,SampleIdentificationCenter-method
+#' .definePanelTour,SampleIdentificationCenter-method
+#' .fullName,SampleIdentificationCenter-method
+#' .generateOutput,SampleIdentificationCenter-method
+#' .panelColor,SampleIdentificationCenter-method
+#' .renderOutput,SampleIdentificationCenter-method
+#' initialize,SampleIdentificationCenter-method
 #'
 #' @examples
 #' library(iSEE)
@@ -61,7 +73,7 @@ NULL
 collated <- character(0)
 
 #' @export
-#' @importClassesFrom iSEE ColumnTable ColumnDataTable
+#' @importClassesFrom iSEE ColumnTable ColumnDataTable Panel
 #' @import SummarizedExperiment
 #' @importFrom shinyAce aceEditor
 setClass("SampleIdentificationCenter",
@@ -115,24 +127,24 @@ setMethod(".createObservers", "SampleIdentificationCenter", function(x, se, inpu
 # Panel output -----------------------------------------------------------------
 
 #' @export
-#' @importFrom shiny tagList
+#' @importFrom shiny tagList uiOutput
 setMethod(".generateOutput", "SampleIdentificationCenter", function(x, se, all_memory, all_contents) {
   print(".generateOutput-SampleIdentificationCenter")
   panel_name <- .getEncodedName(x)
-  
+
   all_cmds <- list()
-  
+
   panel_env <- new.env()
   panel_env$se <- se
-  
+
   all_cmds$select <- .processMultiSelections(x, all_memory, all_contents, panel_env)
   print(all_cmds)
   .textEval(all_cmds, panel_env)
   print(ls(panel_env))
-  
+
   selected_names <- panel_env$col_selected[["active"]]
   print(selected_names)
-  
+
   list(
     commands=all_cmds,
     contents=aceEditor(
@@ -150,9 +162,9 @@ setMethod(".generateOutput", "SampleIdentificationCenter", function(x, se, all_m
 setMethod(".defineOutput", "SampleIdentificationCenter", function(x) {
   print(".defineOutput-SampleIdentificationCenter")
   panel_name <- .getEncodedName(x)
-  
+
   print(x)
-  
+
   tagList(
     uiOutput(panel_name)
   )
@@ -165,13 +177,13 @@ setMethod(".renderOutput", "SampleIdentificationCenter", function(x, se, output,
   print(".renderOutput-SampleIdentificationCenter")
   panel_name <- .getEncodedName(x)
   force(se) # defensive programming to avoid difficult bugs due to delayed evaluation.
-  
+
   # nocov start
   output[[panel_name]] <- renderUI({
     .retrieveOutput(panel_name, se, pObjects, rObjects)$contents
   })
   # nocov end
-  
+
   callNextMethod()
 })
 
