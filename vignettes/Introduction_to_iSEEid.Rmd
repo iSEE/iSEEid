@@ -1,18 +1,20 @@
 ---
 title: "Introduction to iSEEid"
 author: 
+  - name: Federico Marini
+    affiliation:
+    - Institute of Medical Biostatistics, Epidemiology and Informatics (IMBEI), University Medical Center Mainz, Germany
+    - Research Center for Immunotherapy (FZI), Mainz, Germany
+    email: marinif@uni-mainz.de
   - name: Kevin Rue-Albrecht
     affiliation:
-    - University of Oxford
+    - University of Oxford, Oxford, United Kingdom
     email: kevin.rue-albrecht@imm.ox.ac.uk
-  - name: Kevin Rue-Albrecht
+  - name: Charlotte Soneson
     affiliation:
-    - University of Oxford
-    email: kevin.rue-albrecht@imm.ox.ac.uk
-  - name: Kevin Rue-Albrecht
-    affiliation:
-    - University of Oxford
-    email: kevin.rue-albrecht@imm.ox.ac.uk
+    - Friedrich Miescher Institute for Biomedical Research, Basel, Switzerland
+    - SIB Swiss Institute of Bioinformatics
+    email: charlottesoneson@gmail.com
 output: 
   BiocStyle::html_document:
     self_contained: yes
