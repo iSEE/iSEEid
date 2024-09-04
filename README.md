@@ -4,6 +4,8 @@
 # iSEEid
 
 <!-- badges: start -->
+
+[![R-CMD-check-bioc](https://github.com/iSEE/iSEEid/actions/workflows/R-CMD-check-bioc.yaml/badge.svg)](https://github.com/iSEE/iSEEid/actions/workflows/R-CMD-check-bioc.yaml)
 <!-- badges: end -->
 
 The goal of iSEEid is to use `iSEE` to `id`entify cells
