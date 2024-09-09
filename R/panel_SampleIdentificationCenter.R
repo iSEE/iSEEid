@@ -36,11 +36,11 @@
 #' library(scRNAseq)
 #'
 #' # Example data ----
-#' sce <- ReprocessedAllenData(assays="tophat_counts")
+#' sce <- ReprocessedAllenData(assays = "tophat_counts")
 #' class(sce)
 #'
 #' library(scater)
-#' sce <- logNormCounts(sce, exprs_values="tophat_counts")
+#' sce <- logNormCounts(sce, exprs_values = "tophat_counts")
 #'
 #' sce <- runPCA(sce, ncomponents=4)
 #' sce <- runTSNE(sce)
@@ -50,7 +50,7 @@
 #' # launch the app itself ----
 #'
 #' if (interactive()) {
-#'     iSEE(sce, initial=list(
+#'     iSEE(sce, initial = list(
 #'         ReducedDimensionPlot(),
 #'         SampleIdentificationCenter(
 #'           ColumnSelectionSource = "ReducedDimensionPlot1"
@@ -71,6 +71,12 @@ NULL
 # Definition -------------------------------------------------------------------
 
 collated <- character(0)
+
+.EditorUsage <- "EditorUsageMode"
+.AnnotationRationale <- "AnnotationRationale"
+
+collated[.EditorUsage] <- "logical"
+collated[.AnnotationRationale] <- "character"
 
 #' @export
 #' @importClassesFrom iSEE ColumnTable ColumnDataTable Panel
@@ -112,6 +118,28 @@ setMethod("initialize", "SampleIdentificationCenter", function(.Object, ...) {
 
 # TODO - placeholder
 
+#' @export
+#' @importFrom shiny tagList
+setMethod(".defineDataInterface", "SampleIdentificationCenter", function(x) {
+  panel_name <- .getEncodedName(x)
+
+  .addSpecificTour(class(x), .EditorUsage, function(panel_name) {
+    data.frame(
+      element = paste0("#", panel_name, "_", .EditorUsage),
+      intro = "Help editor usage"
+    )
+  })
+
+  tagList(
+    .checkboxInput.iSEE(x, .EditorUsage, label = "Provide commands in the text editor",
+                        value = TRUE),
+    span(id = paste0(.AnnotationRationale, "_specific_help"),
+         style = "display:inline-block; padding-bottom:5px;",
+         HTML("<strong>Specify the rationale for the selection:</strong> <sup>?</sup>")),
+    textInput(inputId = .AnnotationRationale, label = "Annotation rationale")
+  )
+
+})
 ## Idea: have a radio button/checkbox to control what the editor can give
 ## Idea: have a textInput where to record the reason why one would select those cells
 ## These elements could just "refine" the behavior of the content returned by the text editor
@@ -124,6 +152,11 @@ setMethod(".createObservers", "SampleIdentificationCenter", function(x, se, inpu
   callNextMethod()
 
   panel_name <- .getEncodedName(x)
+
+  .createProtectedParameterObservers(panel_name,
+                                     fields = c(.EditorUsage,
+                                                .AnnotationRationale),
+                                     input = input, pObjects = pObjects, rObjects = rObjects)
 
   invisible(NULL)
 })
@@ -150,15 +183,25 @@ setMethod(".generateOutput", "SampleIdentificationCenter", function(x, se, all_m
   selected_names <- panel_env$col_selected[["active"]]
   print(selected_names)
 
+  # print(panel_name[["EditorUsageMode"]])
+
+  # TODO: I just need to access the editor mode and the text input field from the same panel
+  # helpz?
+
+  # here: if only samples, provide only samples. --> paste0(selected_names, collapse = "\n")
+  # If wanting the command: use the line below
+  full_editor_content <- cellids_to_command(selected_names)
+
   list(
-    commands=all_cmds,
-    contents=aceEditor(
+    commands = all_cmds,
+    contents = aceEditor(
       panel_name,
-      mode="r",
-      theme="solarized_light",
-      value=paste0(selected_names, collapse = "\n"),
-      height=paste0(slot(x, .organizationHeight), "px")),
-    varname=panel_name)
+      mode = "r",
+      theme = "solarized_light",
+      # value = paste0(selected_names, collapse = "\n"),
+      value = full_editor_content,
+      height = paste0(slot(x, .organizationHeight), "px")),
+    varname = panel_name)
 })
 
 
