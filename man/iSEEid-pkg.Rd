@@ -7,7 +7,15 @@
 \alias{iSEEid-pkg}
 \title{iSEEid}
 \description{
-What the package does (one paragraph).
+This package provides a dedicated panel to assist the sample identification within a single iSEE web-application. The main functionality of this package can be adopted to efficiently select samples (e.g. cells) that need to be identified and annotated in the analysis workflow. With iSEEid, the iSEE framework fully qualifies to be an ideal companion for assigning appropriate labels to large omics datasets.
+}
+\seealso{
+Useful links:
+\itemize{
+  \item \url{https://github.com/iSEE/iSEEid}
+  \item Report bugs at \url{https://github.com/iSEE/iSEEid/issues}
+}
+
 }
 \author{
 \strong{Maintainer}: Federico Marini \email{marinif@uni-mainz.de} (\href{https://orcid.org/0000-0003-3252-7758}{ORCID})

@@ -18,16 +18,29 @@
 #' In the following code snippets, `x` is an instance of a
 #' [SampleIdentificationCenter-class] class.
 #'
+#' @docType methods
+#'
+#' @aliases
+#' SampleIdentificationCenter SampleIdentificationCenter-class
+#' .createObservers,SampleIdentificationCenter-method
+#' .defineOutput,SampleIdentificationCenter-method
+#' .definePanelTour,SampleIdentificationCenter-method
+#' .fullName,SampleIdentificationCenter-method
+#' .generateOutput,SampleIdentificationCenter-method
+#' .panelColor,SampleIdentificationCenter-method
+#' .renderOutput,SampleIdentificationCenter-method
+#' initialize,SampleIdentificationCenter-method
 #'
 #' @examples
+#' library(iSEE)
 #' library(scRNAseq)
 #'
 #' # Example data ----
-#' sce <- ReprocessedAllenData(assays="tophat_counts")
+#' sce <- ReprocessedAllenData(assays = "tophat_counts")
 #' class(sce)
 #'
 #' library(scater)
-#' sce <- logNormCounts(sce, exprs_values="tophat_counts")
+#' sce <- logNormCounts(sce, exprs_values = "tophat_counts")
 #'
 #' sce <- runPCA(sce, ncomponents=4)
 #' sce <- runTSNE(sce)
@@ -37,9 +50,12 @@
 #' # launch the app itself ----
 #'
 #' if (interactive()) {
-#'     iSEE(sce, initial=list(
+#'     iSEE(sce, initial = list(
 #'         ReducedDimensionPlot(),
-#'         SampleIdentificationCenter())
+#'         SampleIdentificationCenter(
+#'           ColumnSelectionSource = "ReducedDimensionPlot1"
+#'         )
+#'       )
 #'     )
 #' }
 #'
@@ -50,19 +66,24 @@
 #' @name SampleIdentificationCenter-class
 NULL
 
+# Constants --------------------------------------------------------------------
+
 # Definition -------------------------------------------------------------------
 
 collated <- character(0)
 
-.plotBinResolution <- "Content"
-collated[.plotBinResolution] <- "numeric"
+.EditorUsage <- "EditorUsageMode"
+.AnnotationRationale <- "AnnotationRationale"
+
+collated[.EditorUsage] <- "logical"
+collated[.AnnotationRationale] <- "character"
 
 #' @export
-#' @importClassesFrom iSEE ColumnTable ColumnDataTable
+#' @importClassesFrom iSEE ColumnTable ColumnDataTable Panel
 #' @import SummarizedExperiment
 #' @importFrom shinyAce aceEditor
 setClass("SampleIdentificationCenter",
-         contains = "ColumnDataTable"  ,
+         contains = "Panel"  ,
          slots = collated
          )
 
@@ -89,68 +110,39 @@ setMethod(".panelColor", "SampleIdentificationCenter", function(x) "#00C4DA")
 setMethod("initialize", "SampleIdentificationCenter", function(.Object, ...) {
   args <- list(...)
 
-  # args <- .emptyDefault(args, .plotBinResolution, 100)
-  # args[["Downsample"]] <- FALSE
-
   do.call(callNextMethod, c(list(.Object), args))
 })
 
 
 # Interface --------------------------------------------------------------------
 
+# TODO - placeholder
+
 #' @export
 #' @importFrom shiny tagList
 setMethod(".defineDataInterface", "SampleIdentificationCenter", function(x) {
   panel_name <- .getEncodedName(x)
 
-  .addSpecificTour(class(x), .plotBinResolution, function(panel_name) {
+  .addSpecificTour(class(x), .EditorUsage, function(panel_name) {
     data.frame(
-      element=paste0("#", panel_name, "_", .plotBinResolution),
-      intro="Here, we can change the bin size of the plot.
-Larger values will result in larger bins, sacrificing resolution for more stable counts.
-One should avoid setting this too low as then the plot just collapses to showing each point as a separate bin."
+      element = paste0("#", panel_name, "_", .EditorUsage),
+      intro = "Help editor usage"
     )
   })
 
   tagList(
-  .numericInput.iSEE(x, .plotBinResolution, label="Bin resolution:",
-                     min=1, value=x[[.plotBinResolution]], step = 1)
+    .checkboxInput.iSEE(x, .EditorUsage, label = "Provide commands in the text editor",
+                        value = TRUE),
+    span(id = paste0(.AnnotationRationale, "_specific_help"),
+         style = "display:inline-block; padding-bottom:5px;",
+         HTML("<strong>Specify the rationale for the selection:</strong> <sup>?</sup>")),
+    textInput(inputId = .AnnotationRationale, label = "Annotation rationale")
   )
 
-
 })
-
-#' #' @export
-#' #' @importFrom shiny tagList
-#' setMethod(".defineInterface", "SampleIdentificationCenter", function(x) {
-#'   plot_name <- .getEncodedName(x)
-#'
-#'   .addSpecificTour(class(x), .plotBinResolution, function(plot_name) {
-#'     data.frame(
-#'       element=paste0("#", plot_name, "_", .plotBinResolution),
-#'       intro="Here, we can change the bin size of the plot.
-#' Larger values will result in larger bins, sacrificing resolution for more stable counts.
-#' One should avoid setting this too low as then the plot just collapses to showing each point as a separate bin."
-#'     )
-#'   })
-#'
-#'   tagList(
-#'     .numericInput.iSEE(x, .plotBinResolution, label="Bin resolution:",
-#'                        min=1, value=x[[.plotBinResolution]], step = 1)
-#'   )
-#' })
-
-#' #' @export
-#' setMethod(".allowableColorByDataChoices", "SampleIdentificationCenter", function(x, se) {
-#'   .getCachedCommonInfo(se, "ColumnDotPlot")$continuous.colData.names
-#' })
-
-
-
-#' @export
-setMethod(".defineDataInterface", "SampleIdentificationCenter", function(x) {
-  NULL
-})
+## Idea: have a radio button/checkbox to control what the editor can give
+## Idea: have a textInput where to record the reason why one would select those cells
+## These elements could just "refine" the behavior of the content returned by the text editor
 
 # Observers --------------------------------------------------------------------
 
@@ -162,8 +154,9 @@ setMethod(".createObservers", "SampleIdentificationCenter", function(x, se, inpu
   panel_name <- .getEncodedName(x)
 
   .createProtectedParameterObservers(panel_name,
-                                     fields=c(.plotBinResolution),
-                                     input=input, pObjects=pObjects, rObjects=rObjects)
+                                     fields = c(.EditorUsage,
+                                                .AnnotationRationale),
+                                     input = input, pObjects = pObjects, rObjects = rObjects)
 
   invisible(NULL)
 })
@@ -172,86 +165,95 @@ setMethod(".createObservers", "SampleIdentificationCenter", function(x, se, inpu
 # Panel output -----------------------------------------------------------------
 
 #' @export
-#' @importFrom shiny tagList
-setMethod(".defineOutput", "SampleIdentificationCenter", function(x) {
+#' @importFrom shiny tagList uiOutput
+setMethod(".generateOutput", "SampleIdentificationCenter", function(x, se, all_memory, all_contents) {
+  print(".generateOutput-SampleIdentificationCenter")
   panel_name <- .getEncodedName(x)
 
-  id_editor <- paste0(panel_name, "_editor")
-  id_rationale <- paste0(panel_name, "_rationale")
-  id_copypaste <- paste0(panel_name, "_copypaste")
-  id_commander <- paste0(panel_name, "_commander")
+  all_cmds <- list()
 
-  .addSpecificTour(class(x), "editor", function(panel_name) {
-    data.frame(
-      element=paste0("#", panel_name, "_editor"),
-      intro="editor context help."
-    )
-  })
+  panel_env <- new.env()
+  panel_env$se <- se
 
-  .addSpecificTour(class(x), "rationale", function(panel_name) {
-    data.frame(
-      element=paste0("#", panel_name, "_rationale"),
-      intro="rationale context help."
-    )
-  })
+  all_cmds$select <- .processMultiSelections(x, all_memory, all_contents, panel_env)
+  print(all_cmds)
+  .textEval(all_cmds, panel_env)
+  print(ls(panel_env))
 
-  .addSpecificTour(class(x), "copypaste", function(panel_name) {
-    data.frame(
-      element=paste0("#", panel_name, "_copypaste"),
-      intro="_copypaste context help."
-    )
-  })
+  selected_names <- panel_env$col_selected[["active"]]
+  print(selected_names)
 
-  .addSpecificTour(class(x), "commander", function(panel_name) {
-    data.frame(
-      element=paste0("#", panel_name, "_commander"),
-      intro="_commander context help."
-    )
-  })
+  # print(panel_name[["EditorUsageMode"]])
 
+  # TODO: I just need to access the editor mode and the text input field from the same panel
+  # helpz?
+
+  # here: if only samples, provide only samples. --> paste0(selected_names, collapse = "\n")
+  # If wanting the command: use the line below
+
+  full_editor_content <- cellids_to_command(selected_names)
+
+  ## conceptually:
+  # if (editor_return_commands) {
+  #   editor_contents = full_editor_content
+  # } else {
+  #   editor_contents = paste0(selected_names, collapse = "\n")
+  # }
+
+  list(
+    commands = all_cmds,
+    contents = aceEditor(
+      panel_name,
+      mode = "r",
+      theme = "solarized_light",
+      # value = paste0(selected_names, collapse = "\n"),
+      value = full_editor_content,
+      height = paste0(slot(x, .organizationHeight), "px")),
+    varname = panel_name)
+})
+
+
+#' @export
+#' @importFrom shiny tagList
+setMethod(".defineOutput", "SampleIdentificationCenter", function(x) {
+  print(".defineOutput-SampleIdentificationCenter")
+  panel_name <- .getEncodedName(x)
+
+  print(x)
 
   tagList(
-    span(id = paste0(id_editor, "_specific_help"),
-         style="display:inline-block; padding-bottom:5px;",
-         HTML("<strong>Selected cells:</strong> <sup>?</sup>")),
-    aceEditor(id_editor,
-              mode="markdown",
-              theme="xcode",
-              autoComplete="disabled",
-              value=slot(x, "Content"),
-              debounce=1000,
-              height="500px"
-    ),
-
-    span(id = paste0(id_rationale, "_specific_help"),
-         style="display:inline-block; padding-bottom:5px;",
-         HTML("<strong>Specify the rationale for the selection:</strong> <sup>?</sup>")),
-    textInput(id_rationale, label = "",
-              placeholder = "Tell me why"),
-
-    span(id = paste0(id_copypaste, "_specific_help"),
-         style="display:inline-block; padding-bottom:5px;",
-         HTML("<strong>Copy to clipboard</strong> <sup>?</sup>")),
-    br(),
-    actionButton(id_copypaste, label = "Copy to clipboard", icon = icon("copy")),
-    br(),
-
-    span(id = paste0(id_commander, "_specific_help"),
-         style="display:inline-block; padding-bottom:5px;",
-         HTML("<strong>Generate the full command:</strong> <sup>?</sup>")),
-    br(),
-    actionButton(id_commander, label = "Create command!", icon = icon("magic")),
-    hr()
-
+    uiOutput(panel_name)
   )
 
 })
 
+#' @export
+#' @importFrom shiny renderPlot tagList wellPanel nearPoints renderUI
+setMethod(".renderOutput", "SampleIdentificationCenter", function(x, se, output, pObjects, rObjects) {
+  print(".renderOutput-SampleIdentificationCenter")
+  panel_name <- .getEncodedName(x)
+  force(se) # defensive programming to avoid difficult bugs due to delayed evaluation.
 
+  # nocov start
+  output[[panel_name]] <- renderUI({
+    .retrieveOutput(panel_name, se, pObjects, rObjects)$contents
+  })
+  # nocov end
 
+  callNextMethod()
+})
 
+# Transmission -----------------------------------------------------------------
 
-# Tour definition ---------------------------------------------------------
+#' @export
+setMethods(".multiSelectionResponsive", "SampleIdentificationCenter", function(x, dims = character(0)){
+  if ("column" %in% dims) {
+    return(TRUE)
+  }
+  return(FALSE)
+})
+
+# Tour definition --------------------------------------------------------------
 
 #' @export
 setMethod(".definePanelTour", "SampleIdentificationCenter", function(x) {
@@ -261,3 +263,31 @@ setMethod(".definePanelTour", "SampleIdentificationCenter", function(x) {
 
   prev
 })
+
+
+cellids_to_command <- function(cellids,
+                               object_name = "se",
+                               coldata_annotation = "cell_type",
+                               comment_rationale = "") {
+  cmd <- c()
+  cmd <- paste0(cmd,
+                "## This is your SummarizedExperiment object\n# ", object_name,
+                "\n\n## In this slot you store your annotation e.g. your cell label\n# ",
+                "colData(", object_name, ")[['", coldata_annotation, "']]",
+                "\n\n## To rename the selected cells to their new label, you can use\n",
+                "colData(", object_name, ")[['", coldata_annotation, "']][\n",
+                "  c(",
+                paste0(.quoteElement(cellids), collapse = ",\n    "),
+                "\n  )] <- 'new_cell_type'\n"
+  )
+
+  # TODO: consider to add the rationale as a line below/above
+
+  return(cmd)
+
+}
+
+.quoteElement <- function(x) {
+  paste0("'", x, "'")
+}
+
