@@ -190,7 +190,15 @@ setMethod(".generateOutput", "SampleIdentificationCenter", function(x, se, all_m
 
   # here: if only samples, provide only samples. --> paste0(selected_names, collapse = "\n")
   # If wanting the command: use the line below
+
   full_editor_content <- cellids_to_command(selected_names)
+
+  ## conceptually:
+  # if (editor_return_commands) {
+  #   editor_contents = full_editor_content
+  # } else {
+  #   editor_contents = paste0(selected_names, collapse = "\n")
+  # }
 
   list(
     commands = all_cmds,
@@ -272,6 +280,10 @@ cellids_to_command <- function(cellids,
                 paste0(.quoteElement(cellids), collapse = ",\n    "),
                 "\n  )] <- 'new_cell_type'\n"
   )
+
+  # TODO: consider to add the rationale as a line below/above
+
+  return(cmd)
 
 }
 
