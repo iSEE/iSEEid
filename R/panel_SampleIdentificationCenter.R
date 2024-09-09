@@ -212,3 +212,27 @@ setMethod(".definePanelTour", "SampleIdentificationCenter", function(x) {
 
   prev
 })
+
+
+cellids_to_command <- function(cellids,
+                               object_name = "se",
+                               coldata_annotation = "cell_type",
+                               comment_rationale = "") {
+  cmd <- c()
+  cmd <- paste0(cmd,
+                "## This is your SummarizedExperiment object\n# ", object_name,
+                "\n\n## In this slot you store your annotation e.g. your cell label\n# ",
+                "colData(", object_name, ")[['", coldata_annotation, "']]",
+                "\n\n## To rename the selected cells to their new label, you can use\n",
+                "colData(", object_name, ")[['", coldata_annotation, "']][\n",
+                "  c(",
+                paste0(.quoteElement(cellids), collapse = ",\n    "),
+                "\n  )] <- 'new_cell_type'\n"
+  )
+
+}
+
+.quoteElement <- function(x) {
+  paste0("'", x, "'")
+}
+
