@@ -119,7 +119,7 @@ setMethod("initialize", "SampleIdentificationCenter", function(.Object, ...) {
 # TODO - placeholder
 
 #' @export
-#' @importFrom shiny tagList
+#' @importFrom shiny tagList textInput span HTML
 setMethod(".defineDataInterface", "SampleIdentificationCenter", function(x) {
   panel_name <- .getEncodedName(x)
 
