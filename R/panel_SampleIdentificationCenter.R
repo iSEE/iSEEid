@@ -119,7 +119,7 @@ setMethod("initialize", "SampleIdentificationCenter", function(.Object, ...) {
 # TODO - placeholder
 
 #' @export
-#' @importFrom shiny tagList
+#' @importFrom shiny tagList textInput span HTML
 setMethod(".defineDataInterface", "SampleIdentificationCenter", function(x) {
   panel_name <- .getEncodedName(x)
 
@@ -246,11 +246,8 @@ setMethod(".renderOutput", "SampleIdentificationCenter", function(x, se, output,
 # Transmission -----------------------------------------------------------------
 
 #' @export
-setMethods(".multiSelectionResponsive", "SampleIdentificationCenter", function(x, dims = character(0)){
-  if ("column" %in% dims) {
-    return(TRUE)
-  }
-  return(FALSE)
+setMethod(".multiSelectionResponsive", "SampleIdentificationCenter", function(x, dim = character(0)) {
+    dim == "column"
 })
 
 # Tour definition --------------------------------------------------------------
