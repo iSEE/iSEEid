@@ -128,7 +128,7 @@ setMethod("initialize", "SampleIdentificationCenter", function(.Object, ...) {
 
 #' @export
 #' @importFrom shiny tagList textInput span HTML
-setMethod(".defineDataInterface", "SampleIdentificationCenter", function(x) {
+setMethod(".defineDataInterface", "SampleIdentificationCenter", function(x, se, select_info) {
   panel_name <- .getEncodedName(x)
 
   .addSpecificTour(class(x), .EditorUsage, function(panel_name) {
