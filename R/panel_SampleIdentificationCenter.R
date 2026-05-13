@@ -268,7 +268,7 @@ setMethod(".renderOutput", "SampleIdentificationCenter", function(x, se, output,
 
 #' @export
 setMethod(".multiSelectionResponsive", "SampleIdentificationCenter", function(x, dim = character(0)) {
-    dim == "column"
+  dim == "column"
 })
 
 # Tour definition --------------------------------------------------------------
