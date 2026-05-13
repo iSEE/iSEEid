@@ -114,6 +114,10 @@ setMethod(".panelColor", "SampleIdentificationCenter", function(x) "#00C4DA")
 setMethod("initialize", "SampleIdentificationCenter", function(.Object, ...) {
   args <- list(...)
 
+  args <- .emptyDefault(args, .AnnotationRationale, "")
+  args <- .emptyDefault(args, .CellTypeLabel, "new_cell_type")
+  args <- .emptyDefault(args, .ColDataColumn, "cell_type")
+
   do.call(callNextMethod, c(list(.Object), args))
 })
 
