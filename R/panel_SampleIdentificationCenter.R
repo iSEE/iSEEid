@@ -181,7 +181,9 @@ setMethod(".createObservers", "SampleIdentificationCenter", function(x, se, inpu
 
   .createProtectedParameterObservers(panel_name,
                                      fields = c(.EditorUsage,
-                                                .AnnotationRationale),
+                                                .AnnotationRationale,
+                                                .CellTypeLabel,
+                                                .ColDataColumn),
                                      input = input, pObjects = pObjects, rObjects = rObjects)
 
   invisible(NULL)
