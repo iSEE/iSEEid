@@ -226,10 +226,9 @@ setMethod(".generateOutput", "SampleIdentificationCenter", function(x, se, all_m
     commands = all_cmds,
     contents = aceEditor(
       panel_name,
-      mode = "r",
+      mode  = if (isTRUE(slot(x, .EditorUsage))) "r" else "plain_text",
       theme = "solarized_light",
-      # value = paste0(selected_names, collapse = "\n"),
-      value = full_editor_content,
+      value = editor_contents,
       height = paste0(slot(x, .organizationHeight), "px")),
     varname = panel_name)
 })
