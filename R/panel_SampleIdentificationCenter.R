@@ -74,9 +74,13 @@ collated <- character(0)
 
 .EditorUsage <- "EditorUsageMode"
 .AnnotationRationale <- "AnnotationRationale"
+.CellTypeLabel <- "CellTypeLabel"
+.ColDataColumn <- "ColDataColumn"
 
 collated[.EditorUsage] <- "logical"
 collated[.AnnotationRationale] <- "character"
+collated[.CellTypeLabel] <- "character"
+collated[.ColDataColumn] <- "character"
 
 #' @export
 #' @importClassesFrom iSEE ColumnTable ColumnDataTable Panel
@@ -85,7 +89,7 @@ collated[.AnnotationRationale] <- "character"
 setClass("SampleIdentificationCenter",
          contains = "Panel"  ,
          slots = collated
-         )
+)
 
 #' @export
 #' @importFrom methods new
