@@ -211,22 +211,16 @@ setMethod(".generateOutput", "SampleIdentificationCenter", function(x, se, all_m
   selected_names <- panel_env$col_selected[["active"]]
   print(selected_names)
 
-  # print(panel_name[["EditorUsageMode"]])
-
-  # TODO: I just need to access the editor mode and the text input field from the same panel
-  # helpz?
-
-  # here: if only samples, provide only samples. --> paste0(selected_names, collapse = "\n")
-  # If wanting the command: use the line below
-
-  full_editor_content <- cellids_to_command(selected_names)
-
-  ## conceptually:
-  # if (editor_return_commands) {
-  #   editor_contents = full_editor_content
-  # } else {
-  #   editor_contents = paste0(selected_names, collapse = "\n")
-  # }
+  editor_contents <- if (isTRUE(slot(x, .EditorUsage))) {
+    cellids_to_command(
+      selected_names,
+      coldata_annotation  = slot(x, .ColDataColumn),
+      new_cell_type_label = slot(x, .CellTypeLabel),
+      comment_rationale   = slot(x, .AnnotationRationale)
+    )
+  } else {
+    paste0(selected_names, collapse = "\n")
+  }
 
   list(
     commands = all_cmds,
