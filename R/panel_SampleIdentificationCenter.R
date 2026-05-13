@@ -286,25 +286,26 @@ setMethod(".definePanelTour", "SampleIdentificationCenter", function(x) {
 cellids_to_command <- function(cellids,
                                object_name = "se",
                                coldata_annotation = "cell_type",
+                               new_cell_type_label = "new_cell_type",
                                comment_rationale = "") {
-  cmd <- c()
-  cmd <- paste0(cmd,
-                "## This is your SummarizedExperiment object\n# ", object_name,
-                "\n\n## In this slot you store your annotation e.g. your cell label\n# ",
-                "colData(", object_name, ")[['", coldata_annotation, "']]",
-                "\n\n## To rename the selected cells to their new label, you can use\n",
-                # "colData(", object_name, ")[['", coldata_annotation, "']][\n",
-                # "  c(",
-                # paste0(.quoteElement(cellids), collapse = ",\n    "),
-                # "\n  )] <- 'new_cell_type'\n"
 
-                "colData(", object_name, ")[\n",
-                "  c(",
-                paste0(.quoteElement(cellids), collapse = ",\n    "),
-                "\n  ), '", coldata_annotation, "'] <- 'new_cell_type'\n"
+  rationale_line <- if (nzchar(trimws(comment_rationale))) {
+    paste0("## Rationale: ", comment_rationale, "\n")
+  } else {
+    ""
+  }
+
+  cmd <- paste0(
+    "## This is your SummarizedExperiment object\n# ", object_name,
+    "\n\n## In this slot you store your annotation e.g. your cell label\n# ",
+    "colData(", object_name, ")[['", coldata_annotation, "']]\n\n",
+    "## To rename the selected cells to their new label, you can use the command(s) below\n\n",
+    rationale_line,
+    "colData(", object_name, ")[\n",
+    "  c(",
+    paste0(.quoteElement(cellids), collapse = ",\n    "),
+    "\n  ), '", coldata_annotation, "'] <- '", new_cell_type_label, "'\n"
   )
-
-  # TODO: consider to add the rationale as a line below/above
 
   return(cmd)
 
@@ -313,4 +314,3 @@ cellids_to_command <- function(cellids,
 .quoteElement <- function(x) {
   paste0("'", x, "'")
 }
-
