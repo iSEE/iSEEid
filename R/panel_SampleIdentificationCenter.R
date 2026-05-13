@@ -272,10 +272,15 @@ cellids_to_command <- function(cellids,
                 "\n\n## In this slot you store your annotation e.g. your cell label\n# ",
                 "colData(", object_name, ")[['", coldata_annotation, "']]",
                 "\n\n## To rename the selected cells to their new label, you can use\n",
-                "colData(", object_name, ")[['", coldata_annotation, "']][\n",
+                # "colData(", object_name, ")[['", coldata_annotation, "']][\n",
+                # "  c(",
+                # paste0(.quoteElement(cellids), collapse = ",\n    "),
+                # "\n  )] <- 'new_cell_type'\n"
+
+                "colData(", object_name, ")[\n",
                 "  c(",
                 paste0(.quoteElement(cellids), collapse = ",\n    "),
-                "\n  )] <- 'new_cell_type'\n"
+                "\n  ), '", coldata_annotation, "'] <- 'new_cell_type'\n"
   )
 
   # TODO: consider to add the rationale as a line below/above
