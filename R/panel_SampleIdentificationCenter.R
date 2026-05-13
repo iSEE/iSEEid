@@ -139,12 +139,30 @@ setMethod(".defineDataInterface", "SampleIdentificationCenter", function(x, se, 
   })
 
   tagList(
-    .checkboxInput.iSEE(x, .EditorUsage, label = "Provide commands in the text editor",
+    .checkboxInput.iSEE(x, .EditorUsage,
+                        label = "Show full R command (uncheck for displaying the cell id list as plain text)",
                         value = TRUE),
-    span(id = paste0(.AnnotationRationale, "_specific_help"),
+    span(id = paste0(panel_name, "_", .AnnotationRationale, "_specific_help"),
          style = "display:inline-block; padding-bottom:5px;",
          HTML("<strong>Specify the rationale for the selection:</strong> <sup>?</sup>")),
-    textInput(inputId = .AnnotationRationale, label = "Annotation rationale")
+    textInput(
+      inputId  = paste0(panel_name, "_", .AnnotationRationale),
+      label    = "Annotation rationale",
+      value    = slot(x, .AnnotationRationale),
+      placeholder = "e.g. Overexpression of marker X"
+    ),
+    textInput(
+      inputId  = paste0(panel_name, "_", .ColDataColumn),
+      label    = "Enter the colData column for annotation",
+      value    = slot(x, .ColDataColumn),
+      placeholder = "e.g. cell_type (has to be present in the object)"
+    ),
+    textInput(
+      inputId  = paste0(panel_name, "_", .CellTypeLabel),
+      label    = "Enter the new cell type label (to be assigned)",
+      value    = slot(x, .CellTypeLabel),
+      placeholder = "e.g. CD4+ T cells"
+    )
   )
 
 })
