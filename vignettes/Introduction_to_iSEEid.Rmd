@@ -31,7 +31,7 @@ vignette: >
 bibliography: bibliography_iSEEid.bib
 ---
 
-```{r, include = FALSE}
+```{r setup, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
@@ -118,7 +118,7 @@ The panel consists of two parts:
   editor produces, whereas the **Selection paramters** box allows to change the 
   source e.g. for the column selection.
 
-```{r, fig.cap="A basic configuration for using iSEEid.", echo=FALSE}
+```{r figbasic, fig.cap="A basic configuration for using iSEEid.", echo=FALSE}
 knitr::include_graphics("appshot_basic_iSEEid.png")
 ```
   
@@ -206,7 +206,7 @@ iSEE(sce, initial = list(
 ))
 ```
 
-```{r, fig.cap="A somewhat more complex example of iSEEid in action, with some extra panels.", echo=FALSE}
+```{r figadvanced, fig.cap="A somewhat more complex example of iSEEid in action, with some extra panels.", echo=FALSE}
 knitr::include_graphics("appshot_advanced_iSEEid.png")
 ```
  
