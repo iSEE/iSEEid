@@ -5,23 +5,25 @@
 \alias{SampleIdentificationCenter-class}
 \alias{SampleIdentificationCenter}
 \alias{.createObservers,SampleIdentificationCenter-method}
+\alias{.defineDataInterface,SampleIdentificationCenter-method}
 \alias{.defineOutput,SampleIdentificationCenter-method}
 \alias{.definePanelTour,SampleIdentificationCenter-method}
 \alias{.fullName,SampleIdentificationCenter-method}
 \alias{.generateOutput,SampleIdentificationCenter-method}
+\alias{.multiSelectionResponsive,SampleIdentificationCenter-method}
 \alias{.panelColor,SampleIdentificationCenter-method}
 \alias{.renderOutput,SampleIdentificationCenter-method}
 \alias{initialize,SampleIdentificationCenter-method}
 \title{The SampleIdentificationCenter class}
 \description{
-The SampleIdentificationCenter is a \linkS4class{ColumnDataTable} subclass that is dedicated
+The SampleIdentificationCenter is a \link[iSEE:ColumnDataTable-class]{iSEE::ColumnDataTable} subclass that is dedicated
 to TODO..
 }
 \section{Slot overview}{
 
 The following slots control the behavior of the panel: TODO
 
-In addition, this class inherits all slots from its parent \linkS4class{ColumnDataTable}
+In addition, this class inherits all slots from its parent \link[iSEE:ColumnDataTable-class]{iSEE::ColumnDataTable}
 classes.
 }
 
@@ -35,7 +37,7 @@ where any slot and its value can be passed to \code{...} as a named argument.
 \section{Supported methods}{
 
 In the following code snippets, \code{x} is an instance of a
-\linkS4class{SampleIdentificationCenter} class.
+\link[=SampleIdentificationCenter-class]{SampleIdentificationCenter} class.
 }
 
 \examples{
@@ -57,18 +59,18 @@ rowData(sce)$n_cells <- rowSums(assay(sce, "tophat_counts") > 0)
 # launch the app itself ----
 
 if (interactive()) {
-    iSEE(sce, initial = list(
-        ReducedDimensionPlot(),
-        SampleIdentificationCenter(
-          ColumnSelectionSource = "ReducedDimensionPlot1"
-        )
+  iSEE(sce, initial = list(
+       ReducedDimensionPlot(),
+       SampleIdentificationCenter(
+         ColumnSelectionSource = "ReducedDimensionPlot1"
       )
     )
+  )
 }
 
 }
 \seealso{
-\link{ColumnDataTable}, for the base class.
+\link[iSEE:ColumnDataTable]{iSEE::ColumnDataTable}, for the base class.
 }
 \author{
 Federico Marini
