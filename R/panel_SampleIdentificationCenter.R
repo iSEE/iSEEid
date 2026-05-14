@@ -1,12 +1,12 @@
 #' The SampleIdentificationCenter class
 #'
-#' The SampleIdentificationCenter is a [ColumnDataTable-class] subclass that is dedicated
+#' The SampleIdentificationCenter is a [iSEE::ColumnDataTable-class] subclass that is dedicated
 #' to TODO..
 #'
 #' @section Slot overview:
 #' The following slots control the behavior of the panel: TODO
 #'
-#' In addition, this class inherits all slots from its parent [ColumnDataTable-class]
+#' In addition, this class inherits all slots from its parent [iSEE::ColumnDataTable-class]
 #' classes.
 #'
 #' @section Constructor:
@@ -62,7 +62,8 @@
 #' @author Federico Marini
 #'
 #' @seealso
-#' \link{ColumnDataTable}, for the base class.
+#' [iSEE::ColumnDataTable], for the base class.
+#'
 #' @name SampleIdentificationCenter-class
 NULL
 
