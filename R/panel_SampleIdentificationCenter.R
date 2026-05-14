@@ -52,13 +52,13 @@
 #' # launch the app itself ----
 #'
 #' if (interactive()) {
-#'     iSEE(sce, initial = list(
-#'         ReducedDimensionPlot(),
-#'         SampleIdentificationCenter(
-#'           ColumnSelectionSource = "ReducedDimensionPlot1"
-#'         )
+#'   iSEE(sce, initial = list(
+#'        ReducedDimensionPlot(),
+#'        SampleIdentificationCenter(
+#'          ColumnSelectionSource = "ReducedDimensionPlot1"
 #'       )
 #'     )
+#'   )
 #' }
 #'
 #' @author Federico Marini
