@@ -43,14 +43,35 @@ BiocManager::install("iSEE/iSEEid")
 
 ## Example
 
-This is a basic example which shows you how to launch an application...
+We use the Allen Brain Atlas dataset from `r BiocStyle::Biocpkg("scRNAseq")` as a running example, pre-processed in a summary manner just for showing most functionality.
 
-```{r example}
+```{r example, eval=FALSE}
 library("iSEEid")
-## basic example code
+library("iSEE")
+library("scRNAseq")
+library("scater")
+
+sce <- ReprocessedAllenData(assays = "tophat_counts")
+sce <- logNormCounts(sce, exprs_values = "tophat_counts")
+sce <- runPCA(sce, ncomponents = 4)
+sce <- runTSNE(sce)
+
+colData(sce)["cell_type"] <- "unassigned"
+
+sce # this is the SummarizedExperiment object you use to store your data
+
+iSEE(sce, initial = list(
+  ReducedDimensionPlot(
+    PanelWidth = 6L
+  ),
+  SampleIdentificationCenter(
+    ColumnSelectionSource = "ReducedDimensionPlot1",
+    PanelWidth = 6L
+  )
+))
 ```
 
-> maybe put a screenshot at some point or a gif to illustrate how it could work
+![](vignettes/appshot_basic_iSEEid.png)
 
 ## Code of Conduct
 
