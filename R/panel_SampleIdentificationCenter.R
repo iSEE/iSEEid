@@ -20,6 +20,8 @@
 #'
 #' @docType methods
 #'
+#' @return A panel designed to work within the iSEE framework
+#'
 #' @aliases
 #' SampleIdentificationCenter SampleIdentificationCenter-class
 #' .createObservers,SampleIdentificationCenter-method

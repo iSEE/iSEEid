@@ -15,6 +15,9 @@
 \alias{.renderOutput,SampleIdentificationCenter-method}
 \alias{initialize,SampleIdentificationCenter-method}
 \title{The SampleIdentificationCenter class}
+\value{
+A panel designed to work within the iSEE framework
+}
 \description{
 The SampleIdentificationCenter is a \link[iSEE:ColumnDataTable-class]{iSEE::ColumnDataTable} subclass that is dedicated
 to TODO..
