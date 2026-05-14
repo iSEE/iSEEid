@@ -288,16 +288,16 @@ setMethod(".definePanelTour", "SampleIdentificationCenter", function(x) {
                  "The <i>Data parameters</i> box contains all the annotation controls described in this tour.<br/><br/><strong>Action:</strong> click on this box to open up available options."),
 
     c(paste0("#", panel_name, "_", .EditorUsage),
-      "This checkbox controls what is shown in the editor above.<br/><br/>When <b>checked</b>, the editor displays a full R command you can copy and run directly to annotate the selected cells.<br/><br/>When <b>unchecked</b>, the editor shows a plain list of cell IDs — useful if you just need the names for downstream use outside of R."),
+      "This checkbox controls what is shown in the editor above.<br/><br/>When <b>checked</b>, the editor displays a full R command you can copy and run directly to annotate the selected cells.<br/><br/>When <b>unchecked</b>, the editor shows a plain list of cell IDs - useful if you just need the names for downstream use outside of R."),
 
     c(paste0("#", panel_name, "_", .AnnotationRationale),
-      "Use this field to record <i>why</i> you are assigning this label — e.g. <i>Overexpression of marker X</i>.<br/><br/>When filled in, the text is automatically injected as a <code>## Rationale:</code> comment directly above the assignment command in the editor."),
+      "Use this field to record <i>why</i> you are assigning this label - e.g. <i>Overexpression of marker X</i>.<br/><br/>When filled in, the text is automatically injected as a <code>## Rationale:</code> comment directly above the assignment command in the editor."),
 
     c(paste0("#", panel_name, "_", .ColDataColumn),
-      "Enter the name of the <code>colData</code> column where the cell type label should be stored — e.g. <code>cell_type</code>.<br/><br/>This value is used in the generated command as the column index: <code>colData(se)[..., \'cell_type\']</code>. The column must already exist in your object to have a valid command (remember to initialize this if needed)."),
+      "Enter the name of the <code>colData</code> column where the cell type label should be stored - e.g. <code>cell_type</code>.<br/><br/>This value is used in the generated command as the column index: <code>colData(se)[..., \'cell_type\']</code>. The column must already exist in your object to have a valid command (remember to initialize this if needed)."),
 
     c(paste0("#", panel_name, "_", .CellTypeLabel),
-      "Enter the cell type label to assign to the selected cells — e.g. <code>CD4+ T cells</code>.<br/><br/>This becomes the right-hand side of the assignment in the generated command."),
+      "Enter the cell type label to assign to the selected cells - e.g. <code>CD4+ T cells</code>.<br/><br/>This becomes the right-hand side of the assignment in the generated command."),
 
     .addTourStep(x, .dataParamBoxOpen,
                  "You can basically iterate at will the selection in other panels, making sure this one receives it, and specify upon need the new names for the cells to assign."),
@@ -306,7 +306,7 @@ setMethod(".definePanelTour", "SampleIdentificationCenter", function(x) {
                  "The <i>Selection parameters</i> box controls how this panel receives cell selections from other panels.<br/><br/><strong>Action:</strong> click on this box to open up the available options."),
 
     .addTourStep(x, "ColumnSelectionSource", is_selectize=TRUE,
-                 "Use this dropdown to choose which panel transmits its column (cell) selection here — e.g. a <i>Reduced dimension plot</i> where you brushed or lassoed a group of cells.<br/><br/>Once set, any selection made in the chosen panel will immediately update the editor content in this panel."),
+                 "Use this dropdown to choose which panel transmits its column (cell) selection here - e.g. a <i>Reduced dimension plot</i> where you brushed or lassoed a group of cells.<br/><br/>Once set, any selection made in the chosen panel will immediately update the editor content in this panel."),
 
     c(paste0("#", panel_name),
       sprintf("The editor element is a bit of the heart for the <font color=\"%s\">Sample identification center</font> panel. By using this, cleverly combined with patience and efficient column selections from other panels, this can hopefully make the cell type annotation process a bit more breezy!", .getPanelColor(x)))
