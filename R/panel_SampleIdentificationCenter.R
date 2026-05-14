@@ -198,7 +198,7 @@ setMethod(".createObservers", "SampleIdentificationCenter", function(x, se, inpu
 #' @export
 #' @importFrom shiny tagList uiOutput
 setMethod(".generateOutput", "SampleIdentificationCenter", function(x, se, all_memory, all_contents) {
-  print(".generateOutput-SampleIdentificationCenter")
+  # print(".generateOutput-SampleIdentificationCenter")
   panel_name <- .getEncodedName(x)
 
   all_cmds <- list()
@@ -207,12 +207,12 @@ setMethod(".generateOutput", "SampleIdentificationCenter", function(x, se, all_m
   panel_env$se <- se
 
   all_cmds$select <- .processMultiSelections(x, all_memory, all_contents, panel_env)
-  print(all_cmds)
+  # print(all_cmds)
   .textEval(all_cmds, panel_env)
-  print(ls(panel_env))
+  # print(ls(panel_env))
 
   selected_names <- panel_env$col_selected[["active"]]
-  print(selected_names)
+  # print(selected_names)
 
   editor_contents <- if (isTRUE(slot(x, .EditorUsage))) {
     cellids_to_command(
@@ -240,10 +240,10 @@ setMethod(".generateOutput", "SampleIdentificationCenter", function(x, se, all_m
 #' @export
 #' @importFrom shiny tagList
 setMethod(".defineOutput", "SampleIdentificationCenter", function(x) {
-  print(".defineOutput-SampleIdentificationCenter")
+  # print(".defineOutput-SampleIdentificationCenter")
   panel_name <- .getEncodedName(x)
 
-  print(x)
+  # print(x)
 
   tagList(
     uiOutput(panel_name)
@@ -254,7 +254,7 @@ setMethod(".defineOutput", "SampleIdentificationCenter", function(x) {
 #' @export
 #' @importFrom shiny renderPlot tagList wellPanel nearPoints renderUI
 setMethod(".renderOutput", "SampleIdentificationCenter", function(x, se, output, pObjects, rObjects) {
-  print(".renderOutput-SampleIdentificationCenter")
+  # print(".renderOutput-SampleIdentificationCenter")
   panel_name <- .getEncodedName(x)
   force(se) # defensive programming to avoid difficult bugs due to delayed evaluation.
 
