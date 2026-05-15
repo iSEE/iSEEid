@@ -23,17 +23,7 @@
 #' @return A panel designed to work within the iSEE framework
 #'
 #' @aliases
-#' SampleIdentificationCenter SampleIdentificationCenter-class
-#' .createObservers,SampleIdentificationCenter-method
-#' .defineDataInterface,SampleIdentificationCenter-method
-#' .defineOutput,SampleIdentificationCenter-method
-#' .definePanelTour,SampleIdentificationCenter-method
-#' .fullName,SampleIdentificationCenter-method
-#' .generateOutput,SampleIdentificationCenter-method
-#' .multiSelectionResponsive,SampleIdentificationCenter-method
-#' .panelColor,SampleIdentificationCenter-method
-#' .renderOutput,SampleIdentificationCenter-method
-#' initialize,SampleIdentificationCenter-method
+#' SampleIdentificationCenter SampleIdentificationCenter-class .createObservers,SampleIdentificationCenter-method .defineDataInterface,SampleIdentificationCenter-method .defineOutput,SampleIdentificationCenter-method .definePanelTour,SampleIdentificationCenter-method .fullName,SampleIdentificationCenter-method .generateOutput,SampleIdentificationCenter-method .multiSelectionResponsive,SampleIdentificationCenter-method .panelColor,SampleIdentificationCenter-method .renderOutput,SampleIdentificationCenter-method initialize,SampleIdentificationCenter-method
 #'
 #' @examples
 #' library(iSEE)
