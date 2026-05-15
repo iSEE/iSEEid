@@ -34,7 +34,8 @@
 #' class(sce)
 #'
 #' library(scater)
-#' sce <- logNormCounts(sce, exprs_values = "tophat_counts")
+#' library(scrapper)
+#' sce <- normalizeRnaCounts.se(sce, assay.type = "tophat_counts", size.factors = NULL)
 #'
 #' sce <- runPCA(sce, ncomponents=4)
 #' sce <- runTSNE(sce)
