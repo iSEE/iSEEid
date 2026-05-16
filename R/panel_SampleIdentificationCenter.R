@@ -23,17 +23,7 @@
 #' @return A panel designed to work within the iSEE framework
 #'
 #' @aliases
-#' SampleIdentificationCenter SampleIdentificationCenter-class
-#' .createObservers,SampleIdentificationCenter-method
-#' .defineDataInterface,SampleIdentificationCenter-method
-#' .defineOutput,SampleIdentificationCenter-method
-#' .definePanelTour,SampleIdentificationCenter-method
-#' .fullName,SampleIdentificationCenter-method
-#' .generateOutput,SampleIdentificationCenter-method
-#' .multiSelectionResponsive,SampleIdentificationCenter-method
-#' .panelColor,SampleIdentificationCenter-method
-#' .renderOutput,SampleIdentificationCenter-method
-#' initialize,SampleIdentificationCenter-method
+#' SampleIdentificationCenter SampleIdentificationCenter-class .createObservers,SampleIdentificationCenter-method .defineDataInterface,SampleIdentificationCenter-method .defineOutput,SampleIdentificationCenter-method .definePanelTour,SampleIdentificationCenter-method .fullName,SampleIdentificationCenter-method .generateOutput,SampleIdentificationCenter-method .multiSelectionResponsive,SampleIdentificationCenter-method .panelColor,SampleIdentificationCenter-method .renderOutput,SampleIdentificationCenter-method initialize,SampleIdentificationCenter-method
 #'
 #' @examples
 #' library(iSEE)
@@ -44,7 +34,8 @@
 #' class(sce)
 #'
 #' library(scater)
-#' sce <- logNormCounts(sce, exprs_values = "tophat_counts")
+#' library(scrapper)
+#' sce <- normalizeRnaCounts.se(sce, assay.type = "tophat_counts", size.factors = NULL)
 #'
 #' sce <- runPCA(sce, ncomponents=4)
 #' sce <- runTSNE(sce)

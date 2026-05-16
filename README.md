@@ -44,9 +44,10 @@ library("iSEEid")
 library("iSEE")
 library("scRNAseq")
 library("scater")
+library("scrapper")
 
 sce <- ReprocessedAllenData(assays = "tophat_counts")
-sce <- logNormCounts(sce, exprs_values = "tophat_counts")
+sce <- normalizeRnaCounts.se(sce, assay.type = "tophat_counts", size.factors = NULL)
 sce <- runPCA(sce, ncomponents = 4)
 sce <- runTSNE(sce)
 
