@@ -67,6 +67,13 @@ iSEE(sce, initial = list(
 
 ![](vignettes/appshot_basic_iSEEid.png)
 
+## Disclaimer
+
+The large language model [claude.ai](https://claude.ai/) (Sonnet 4.6)
+has been used in conversational mode to enable the output format switch
+in the panel, to comply with the remainder of iSEE’s architecture. Code
+suggestions have been revised and validated before committing them.
+
 ## Code of Conduct
 
 Please note that the
