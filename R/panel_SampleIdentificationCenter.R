@@ -132,8 +132,6 @@ setMethod("initialize", "SampleIdentificationCenter", function(.Object, ...) {
 
 # Interface --------------------------------------------------------------------
 
-# TODO - placeholder
-
 #' @export
 #' @importFrom shiny tagList textInput span HTML
 setMethod(".defineDataInterface", "SampleIdentificationCenter", function(x, se, select_info) {
