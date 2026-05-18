@@ -1,13 +1,25 @@
 #' The SampleIdentificationCenter class
 #'
-#' The SampleIdentificationCenter is a [iSEE::ColumnDataTable-class] subclass that is dedicated
-#' to TODO..
+#' The SampleIdentificationCenter is a [iSEE::Panel-class] subclass that is dedicated
+#' to generating ready-to-use R code for assigning a sample label to samples
+#' received by a selection from another panel.
 #'
 #' @section Slot overview:
-#' The following slots control the behavior of the panel: TODO
+#' The following slots control the behavior of the panel: 
+#' \itemize{
+#' \item \code{EditorUsageMode}, a logical scalar determining whether to show 
+#' the full R command for making the sample label assignments (if \code{FALSE}, 
+#' displays the sample id list as plain text).
+#' \item \code{AnnotationRationale}, a string specifying the rationale for the 
+#' sample label assignment.
+#' \item \code{CellTypeLabel}, a string providing the label to assign to the 
+#' selected samples. 
+#' \item \code{ColDataColumn}, a string indicating the name of the colData 
+#' column to store the assigned labels.  
+#' }
 #'
-#' In addition, this class inherits all slots from its parent [iSEE::ColumnDataTable-class]
-#' classes.
+#' In addition, this class inherits all slots from its parent [iSEE::Panel-class]
+#' class.
 #'
 #' @section Constructor:
 #' `SampleIdentificationCenter(...)` creates an instance of a
@@ -57,7 +69,7 @@
 #' @author Federico Marini
 #'
 #' @seealso
-#' [iSEE::ColumnDataTable], for the base class.
+#' [iSEE::Panel-class], for the base class.
 #'
 #' @name SampleIdentificationCenter-class
 NULL
@@ -83,7 +95,7 @@ collated[.ColDataColumn] <- "character"
 #' @import SummarizedExperiment
 #' @importFrom shinyAce aceEditor
 setClass("SampleIdentificationCenter",
-         contains = "Panel"  ,
+         contains = "Panel",
          slots = collated
 )
 
@@ -120,30 +132,19 @@ setMethod("initialize", "SampleIdentificationCenter", function(.Object, ...) {
 
 # Interface --------------------------------------------------------------------
 
-# TODO - placeholder
-
 #' @export
 #' @importFrom shiny tagList textInput span HTML
 setMethod(".defineDataInterface", "SampleIdentificationCenter", function(x, se, select_info) {
   panel_name <- .getEncodedName(x)
 
-  .addSpecificTour(class(x), .EditorUsage, function(panel_name) {
-    data.frame(
-      element = paste0("#", panel_name, "_", .EditorUsage),
-      intro = "Help editor usage"
-    )
-  })
-
   tagList(
-    .checkboxInput.iSEE(x, .EditorUsage,
-                        label = "Show full R command (uncheck for displaying the cell id list as plain text)",
-                        value = TRUE),
-    span(id = paste0(panel_name, "_", .AnnotationRationale, "_specific_help"),
-         style = "display:inline-block; padding-bottom:5px;",
-         HTML("<strong>Specify the rationale for the selection:</strong> <sup>?</sup>")),
+    .checkboxInput.iSEE(
+      x, .EditorUsage,
+      label = "Show full R command (uncheck for displaying the cell id list as plain text)",
+      value = TRUE),
     textInput(
       inputId  = paste0(panel_name, "_", .AnnotationRationale),
-      label    = "Annotation rationale",
+      label    = "Specify the rationale for the selection",
       value    = slot(x, .AnnotationRationale),
       placeholder = "e.g. Overexpression of marker X"
     ),
@@ -162,9 +163,6 @@ setMethod(".defineDataInterface", "SampleIdentificationCenter", function(x, se, 
   )
 
 })
-## Idea: have a radio button/checkbox to control what the editor can give
-## Idea: have a textInput where to record the reason why one would select those cells
-## These elements could just "refine" the behavior of the content returned by the text editor
 
 # Observers --------------------------------------------------------------------
 
