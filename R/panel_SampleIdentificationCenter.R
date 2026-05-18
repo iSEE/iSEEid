@@ -1,13 +1,25 @@
 #' The SampleIdentificationCenter class
 #'
-#' The SampleIdentificationCenter is a [iSEE::ColumnDataTable-class] subclass that is dedicated
-#' to TODO..
+#' The SampleIdentificationCenter is a [iSEE::Panel-class] subclass that is dedicated
+#' to generating ready-to-use R code for assigning a sample label to samples
+#' received by a selection from another panel.
 #'
 #' @section Slot overview:
-#' The following slots control the behavior of the panel: TODO
+#' The following slots control the behavior of the panel: 
+#' \itemize{
+#' \item \code{EditorUsageMode}, a logical scalar determining whether to show 
+#' the full R command for making the sample label assignments (if \code{FALSE}, 
+#' displays the sample id list as plain text).
+#' \item \code{AnnotationRationale}, a string specifying the rationale for the 
+#' sample label assignment.
+#' \item \code{CellTypeLabel}, a string providing the label to assign to the 
+#' selected samples. 
+#' \item \code{ColDataColumn}, a string indicating the name of the colData 
+#' column to store the assigned labels.  
+#' }
 #'
-#' In addition, this class inherits all slots from its parent [iSEE::ColumnDataTable-class]
-#' classes.
+#' In addition, this class inherits all slots from its parent [iSEE::Panel-class]
+#' class.
 #'
 #' @section Constructor:
 #' `SampleIdentificationCenter(...)` creates an instance of a
@@ -57,7 +69,7 @@
 #' @author Federico Marini
 #'
 #' @seealso
-#' [iSEE::ColumnDataTable], for the base class.
+#' [iSEE::Panel-class], for the base class.
 #'
 #' @name SampleIdentificationCenter-class
 NULL
@@ -83,7 +95,7 @@ collated[.ColDataColumn] <- "character"
 #' @import SummarizedExperiment
 #' @importFrom shinyAce aceEditor
 setClass("SampleIdentificationCenter",
-         contains = "Panel"  ,
+         contains = "Panel",
          slots = collated
 )
 
