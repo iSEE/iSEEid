@@ -139,23 +139,14 @@ setMethod("initialize", "SampleIdentificationCenter", function(.Object, ...) {
 setMethod(".defineDataInterface", "SampleIdentificationCenter", function(x, se, select_info) {
   panel_name <- .getEncodedName(x)
 
-  .addSpecificTour(class(x), .EditorUsage, function(panel_name) {
-    data.frame(
-      element = paste0("#", panel_name, "_", .EditorUsage),
-      intro = "Help editor usage"
-    )
-  })
-
   tagList(
-    .checkboxInput.iSEE(x, .EditorUsage,
-                        label = "Show full R command (uncheck for displaying the cell id list as plain text)",
-                        value = TRUE),
-    span(id = paste0(panel_name, "_", .AnnotationRationale, "_specific_help"),
-         style = "display:inline-block; padding-bottom:5px;",
-         HTML("<strong>Specify the rationale for the selection:</strong> <sup>?</sup>")),
+    .checkboxInput.iSEE(
+      x, .EditorUsage,
+      label = "Show full R command (uncheck for displaying the cell id list as plain text)",
+      value = TRUE),
     textInput(
       inputId  = paste0(panel_name, "_", .AnnotationRationale),
-      label    = "Annotation rationale",
+      label    = "Specify the rationale for the selection",
       value    = slot(x, .AnnotationRationale),
       placeholder = "e.g. Overexpression of marker X"
     ),
@@ -174,9 +165,6 @@ setMethod(".defineDataInterface", "SampleIdentificationCenter", function(x, se, 
   )
 
 })
-## Idea: have a radio button/checkbox to control what the editor can give
-## Idea: have a textInput where to record the reason why one would select those cells
-## These elements could just "refine" the behavior of the content returned by the text editor
 
 # Observers --------------------------------------------------------------------
 
