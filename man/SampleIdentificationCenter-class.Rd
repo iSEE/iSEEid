@@ -14,6 +14,7 @@
 \alias{.panelColor,SampleIdentificationCenter-method}
 \alias{.renderOutput,SampleIdentificationCenter-method}
 \alias{initialize,SampleIdentificationCenter-method}
+\alias{.hideInterface,SampleIdentificationCenter-method}
 \title{The SampleIdentificationCenter class}
 \value{
 A panel designed to work within the iSEE framework
