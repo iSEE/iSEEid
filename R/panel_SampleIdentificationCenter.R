@@ -164,6 +164,15 @@ setMethod(".defineDataInterface", "SampleIdentificationCenter", function(x, se, 
 
 })
 
+#' @export
+setMethod(".hideInterface", "SampleIdentificationCenter", function(x, field) {
+    if (field %in% c(iSEE:::.selectRowSource, iSEE:::.selectRowRestrict, iSEE:::.selectRowDynamic)) {
+        TRUE
+    } else {
+        callNextMethod()
+    }
+})
+
 # Observers --------------------------------------------------------------------
 
 #' @export
