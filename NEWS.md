@@ -1,3 +1,7 @@
+# iSEEid 0.99.0
+
+* Ready for Bioc submission!
+
 # iSEEid 0.9.0
 
 * Finalized the functionality for the SampleIdentificationCenter panel, adding extra
