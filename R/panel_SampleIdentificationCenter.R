@@ -5,17 +5,17 @@
 #' received by a selection from another panel.
 #'
 #' @section Slot overview:
-#' The following slots control the behavior of the panel: 
+#' The following slots control the behavior of the panel:
 #' \itemize{
-#' \item \code{EditorUsageMode}, a logical scalar determining whether to show 
-#' the full R command for making the sample label assignments (if \code{FALSE}, 
+#' \item \code{EditorUsageMode}, a logical scalar determining whether to show
+#' the full R command for making the sample label assignments (if \code{FALSE},
 #' displays the sample id list as plain text).
-#' \item \code{AnnotationRationale}, a string specifying the rationale for the 
+#' \item \code{AnnotationRationale}, a string specifying the rationale for the
 #' sample label assignment.
-#' \item \code{CellTypeLabel}, a string providing the label to assign to the 
-#' selected samples. 
-#' \item \code{ColDataColumn}, a string indicating the name of the colData 
-#' column to store the assigned labels.  
+#' \item \code{CellTypeLabel}, a string providing the label to assign to the
+#' selected samples.
+#' \item \code{ColDataColumn}, a string indicating the name of the colData
+#' column to store the assigned labels.
 #' }
 #'
 #' In addition, this class inherits all slots from its parent [iSEE::Panel-class]
@@ -35,7 +35,7 @@
 #' @return A panel designed to work within the iSEE framework
 #'
 #' @aliases
-#' SampleIdentificationCenter SampleIdentificationCenter-class .createObservers,SampleIdentificationCenter-method .defineDataInterface,SampleIdentificationCenter-method .defineOutput,SampleIdentificationCenter-method .definePanelTour,SampleIdentificationCenter-method .fullName,SampleIdentificationCenter-method .generateOutput,SampleIdentificationCenter-method .multiSelectionResponsive,SampleIdentificationCenter-method .panelColor,SampleIdentificationCenter-method .renderOutput,SampleIdentificationCenter-method initialize,SampleIdentificationCenter-method
+#' SampleIdentificationCenter SampleIdentificationCenter-class .createObservers,SampleIdentificationCenter-method .defineDataInterface,SampleIdentificationCenter-method .defineOutput,SampleIdentificationCenter-method .definePanelTour,SampleIdentificationCenter-method .fullName,SampleIdentificationCenter-method .generateOutput,SampleIdentificationCenter-method .multiSelectionResponsive,SampleIdentificationCenter-method .panelColor,SampleIdentificationCenter-method .renderOutput,SampleIdentificationCenter-method initialize,SampleIdentificationCenter-method .hideInterface,SampleIdentificationCenter-method
 #'
 #' @examples
 #' library(iSEE)
