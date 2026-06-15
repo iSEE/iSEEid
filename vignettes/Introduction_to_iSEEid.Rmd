@@ -116,7 +116,7 @@ The panel consists of two parts:
 - a **Text editor** (top) showing either a ready-to-run R command or a plain
   list of cell IDs, updated live as the upstream selection changes;
 - a **Data parameters** box (bottom) with controls to customize what the
-  editor produces, whereas the **Selection paramters** box allows to change the 
+  editor produces, whereas the **Selection parameters** box allows to change the 
   source e.g. for the column selection.
 
 ```{r figbasic, fig.cap="A basic configuration for using iSEEid.", echo=FALSE}
