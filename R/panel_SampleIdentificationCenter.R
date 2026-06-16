@@ -6,17 +6,16 @@
 #'
 #' @section Slot overview:
 #' The following slots control the behavior of the panel:
-#' \itemize{
-#' \item \code{EditorUsageMode}, a logical scalar determining whether to show
+#'
+#' * `EditorUsageMode`, a logical scalar determining whether to show
 #' the full R command for making the sample label assignments (if \code{FALSE},
 #' displays the sample id list as plain text).
-#' \item \code{AnnotationRationale}, a string specifying the rationale for the
+#' * `AnnotationRationale`, a string specifying the rationale for the
 #' sample label assignment.
-#' \item \code{CellTypeLabel}, a string providing the label to assign to the
+#' * `CellTypeLabel`, a string providing the label to assign to the
 #' selected samples.
-#' \item \code{ColDataColumn}, a string indicating the name of the colData
+#' * `ColDataColumn`, a string indicating the name of the colData
 #' column to store the assigned labels.
-#' }
 #'
 #' In addition, this class inherits all slots from its parent [iSEE::Panel-class]
 #' class.
