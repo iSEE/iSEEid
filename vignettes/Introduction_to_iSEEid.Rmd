@@ -50,6 +50,8 @@ This panel receives a cell selection transmitted from any other panel (e.g. a br
 
 The generated command can be copied directly into a script or notebook, making `iSEEid` a natural companion for interactive annotation workflows.
 
+A place to check out what belongs to the iSEE "core functionality" would be the iSEE organization website (https://isee.github.io/) and the "Extending iSEE" book (https://isee.github.io/iSEE-book/).  
+This package has been conceived and developed as a corollary to the iSEE workshop delivered in Oxford in 2024, for which we also have put together a resource documenting what is needed to write iSEE extensions (https://isee.github.io/iSEEDemoEuroBioC2024/articles/workshop_isee_extension.html). 
 
 # Installation
 
