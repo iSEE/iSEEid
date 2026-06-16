@@ -1,3 +1,9 @@
+# iSEEid 0.99.1
+
+* Added some information on the core iSEE + how to write extensions for iSEE, linking 
+  to the material prepared for EuroBioC2024 (Oxford)
+* Harmonized the roxygen documentation, sticking to markdown encoding (vs raw Rd syntax)
+
 # iSEEid 0.99.0
 
 * Ready for Bioc submission!
