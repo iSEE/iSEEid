@@ -20,17 +20,21 @@ importClassesFrom(iSEE,ColumnDataTable)
 importClassesFrom(iSEE,ColumnTable)
 importClassesFrom(iSEE,Panel)
 importFrom(iSEE,.emptyDefault)
-importFrom(methods,callNextMethod)
-importFrom(methods,new)
-importFrom(shiny,HTML)
-importFrom(shiny,nearPoints)
-importFrom(shiny,renderPlot)
-importFrom(shiny,renderUI)
-importFrom(shiny,span)
-importFrom(shiny,tagList)
-importFrom(shiny,textInput)
-importFrom(shiny,uiOutput)
-importFrom(shiny,wellPanel)
+importFrom(methods,
+  callNextMethod,
+  new
+)
+importFrom(shiny,
+  HTML,
+  nearPoints,
+  renderPlot,
+  renderUI,
+  span,
+  tagList,
+  textInput,
+  uiOutput,
+  wellPanel
+)
 importFrom(shinyAce,aceEditor)
 importMethodsFrom(iSEE,.fullName)
 importMethodsFrom(iSEE,.panelColor)
