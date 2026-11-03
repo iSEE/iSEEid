@@ -7,3 +7,4 @@ TODO.md$
 ^\.github$
 ^\.positai$
 ^\.claude$
+^\.DS_Store$
